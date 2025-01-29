@@ -26,6 +26,18 @@ class TaskManager < Thor
     puts "#{task} added to the list."
   end
 
+  desc "remove INDEX", "Remove a task by its index"
+  def remove(index)
+    index = index.to_i - 1
+    if index.between?(0, @tasks.length - 1)
+      removed = @tasks.delete_at(index)
+      save_tasks
+      puts "Removed task: #{removed}"
+    else
+      puts "Invalid task index."
+    end
+  end
+
   private 
 
   def save_tasks 

@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require "json"
 require "thor"
+require "colorize"
 
 TASKS_FILE = "tasks.json"
 
@@ -13,9 +14,10 @@ class TaskManager < Thor
   desc "list", "List all tasks"
   def list
     if @tasks.empty?
-      puts "No tasks were found"
+      puts "No tasks were found".orange
     else
-      @tasks.each_with_index { |task, i| puts "#{i+1}. #{task}"}
+      puts "Your task list".green
+      @tasks.each_with_index { |task, i| puts "#{i+1}. #{task}".blue}
     end
   end
 
@@ -23,7 +25,7 @@ class TaskManager < Thor
   def add(task)
     @tasks << task 
     save_tasks
-    puts "#{task} added to the list."
+    puts "#{task} added to the list.".green
   end
 
   desc "remove INDEX", "Remove a task by its index"
@@ -32,9 +34,9 @@ class TaskManager < Thor
     if index.between?(0, @tasks.length - 1)
       removed = @tasks.delete_at(index)
       save_tasks
-      puts "Removed task: #{removed}"
+      puts "Removed task: #{removed}".red
     else
-      puts "Invalid task index."
+      puts "Invalid task index.".red
     end
   end
 

@@ -40,6 +40,14 @@ class TaskManager < Thor
     end
   end
 
+  desc "clear", "Clears all tasks from list"
+  def clear
+    @tasks.clear
+    save_tasks
+
+    puts "task list has been cleared".red
+  end
+
   private 
 
   def save_tasks 
